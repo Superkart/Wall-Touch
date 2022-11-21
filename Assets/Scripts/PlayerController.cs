@@ -2,23 +2,23 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private GameObject gameWonPanel;
+    [SerializeField] private UiManager uiManager;
+    
     private Rigidbody2D playerRigidbody;
-    private float speed = 4f;
-    private bool gameOver = false;
+    private float speed = 3f;
+    
 
     private void Awake()
     {
-        playerRigidbody = this.gameObject.GetComponent<Rigidbody2D>();
-        if (gameWonPanel.activeSelf)
-        {
-            gameWonPanel.SetActive(false);
-        }
+        playerRigidbody = this.gameObject.GetComponent<Rigidbody2D>();   
     }
     private void Update()
     {
-        if (!gameOver)
+        if(Input.GetKeyDown(KeyCode.Escape))
         {
+            Application.Quit();
+        }
+        
             if (Input.GetAxis("Horizontal") > 0)
             {
                 playerRigidbody.velocity = new Vector2(speed, 0);
@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
             {
                 playerRigidbody.velocity = Vector2.zero;
             }
-        }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -47,8 +47,13 @@ public class PlayerController : MonoBehaviour
         if(collision.tag == "Door")
         {
             Debug.Log("Level Completed!");
-            gameWonPanel.SetActive(true);
-            gameOver= true;
+            uiManager.GameWon();
+            Time.timeScale = 0f;
+        }
+        if(collision.tag == "ToxicWall")
+        {
+            Debug.Log("Level Lost!");
+            uiManager.GameLost();
             Time.timeScale = 0f;
         }
         else
