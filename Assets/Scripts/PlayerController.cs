@@ -1,12 +1,14 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private UiManager uiManager;
+    [SerializeField] private CameraEffects camEffects;
     
     private Rigidbody2D playerRigidbody;
     private float speed = 3f;
-    
+    private bool isGameOver = false;
 
     private void Awake()
     {
@@ -18,7 +20,8 @@ public class PlayerController : MonoBehaviour
         {
             Application.Quit();
         }
-        
+        if (!isGameOver)
+        {
             if (Input.GetAxis("Horizontal") > 0)
             {
                 playerRigidbody.velocity = new Vector2(speed, 0);
@@ -39,7 +42,8 @@ public class PlayerController : MonoBehaviour
             {
                 playerRigidbody.velocity = Vector2.zero;
             }
-        
+        }
+               
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -52,9 +56,10 @@ public class PlayerController : MonoBehaviour
         }
         if(collision.tag == "ToxicWall")
         {
-            Debug.Log("Level Lost!");
+            StartCoroutine(camEffects.Shake(0.3f, 0.2f));
+            Debug.Log("Level Lost!");         
             uiManager.GameLost();
-            Time.timeScale = 0f;
+            isGameOver = true;
         }
         else
         {

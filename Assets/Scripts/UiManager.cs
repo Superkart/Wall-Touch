@@ -27,6 +27,7 @@ public class UiManager : MonoBehaviour
     public void GameLost()
     {
         gameLostPanel.SetActive(true);
+        Time.timeScale = 0f;
     }
 
     public void RestartLevel()
