@@ -1,0 +1,67 @@
+# Unity text assets (force LF line endings and mark as text)
+*.cs           text eol=lf
+*.shader       text eol=lf
+*.cginc        text eol=lf
+*.hlsl         text eol=lf
+*.compute      text eol=lf
+*.json         text eol=lf
+*.yaml         text eol=lf
+*.yml          text eol=lf
+*.xml          text eol=lf
+*.txt          text eol=lf
+*.asmdef       text eol=lf
+*.md           text eol=lf
+*.py           text eol=lf
+*.bat          text eol=crlf
+*.ps1          text eol=crlf
+
+# Unity binary assets (mark as binary to prevent diff)
+*.unity        binary
+*.prefab       binary
+*.asset        binary
+*.mat          binary
+*.fbx          binary
+*.png          binary
+*.jpg          binary
+*.jpeg         binary
+*.tga          binary
+*.psd          binary
+*.mp3          binary
+*.wav          binary
+*.ogg          binary
+*.mp4          binary
+*.anim         binary
+*.controller   binary
+*.meta         text merge=union
+
+# Prevent Git from trying to guess content
+*.dll          binary
+*.exe          binary
+*.zip          binary
+
+# Prevent line-ending normalization on Unity’s default YAML-style serialized data
+*.meta         text merge=union eol=lf
+*.unity        text merge=union eol=lf
+*.prefab       text merge=union eol=lf
+*.asset        text merge=union eol=lf
+
+# Prevent merge conflicts in binary files
+*.png          -diff
+*.jpg          -diff
+*.ogg          -diff
+*.mp4          -diff
+
+# TensorFlow/ML related
+*.onnx         binary
+*.pb           binary
+*.npz          binary
+*.pt           binary
+
+# Ignore training logs in diff views
+*.tfevents.*   binary
+
+# Git LFS (optional - if you're using LFS)
+# If you're using Git LFS, uncomment these lines:
+# *.psd filter=lfs diff=lfs merge=lfs -text
+# *.fbx filter=lfs diff=lfs merge=lfs -text
+# *.mp4 filter=lfs diff=lfs merge=lfs -text
